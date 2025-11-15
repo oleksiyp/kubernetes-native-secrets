@@ -103,53 +103,56 @@ export default function NamespacePage() {
         <div className="mb-6">
           <Link
             href="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4 text-sm md:text-base"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to namespaces
           </Link>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">{namespace}</h1>
-          <p className="text-gray-600">Manage secrets for this namespace</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2 break-words">{namespace}</h1>
+          <p className="text-sm md:text-base text-gray-600">Manage secrets for this namespace</p>
         </div>
 
-        <div className="mb-6 border-b border-gray-200">
-          <nav className="flex space-x-8">
+        <div className="mb-6 border-b border-gray-200 overflow-x-auto">
+          <nav className="flex space-x-4 md:space-x-8 min-w-max">
             <button
               onClick={() => setActiveTab('secrets')}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition whitespace-nowrap ${
                 activeTab === 'secrets'
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              <Shield className="w-4 h-4 inline mr-2" />
-              Secrets
+              <Shield className="w-4 h-4 inline mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Secrets</span>
+              <span className="sm:hidden">Secrets</span>
             </button>
             <button
               onClick={() => setActiveTab('requests')}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition relative ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition relative whitespace-nowrap ${
                 activeTab === 'requests'
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              Access Requests
+              <span className="hidden sm:inline">Access Requests</span>
+              <span className="sm:hidden">Requests</span>
               {pendingRequests.length > 0 && (
-                <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+                <span className="ml-1 md:ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
                   {pendingRequests.length}
                 </span>
               )}
             </button>
             <button
               onClick={() => setActiveTab('audit')}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition whitespace-nowrap ${
                 activeTab === 'audit'
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              <History className="w-4 h-4 inline mr-2" />
-              Audit Log
+              <History className="w-4 h-4 inline mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Audit Log</span>
+              <span className="sm:hidden">Audit</span>
             </button>
           </nav>
         </div>

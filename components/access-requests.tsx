@@ -71,12 +71,12 @@ export function AccessRequests({
         </div>
         <div className="divide-y divide-gray-200">
           {pendingRequests.map((request, index) => (
-            <div key={`${request.key}-${index}`} className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
+            <div key={`${request.key}-${index}`} className="p-4 md:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2 mb-2">
-                    <UserPlus className="w-5 h-5 text-blue-600" />
-                    <h3 className="font-semibold text-gray-800">
+                    <UserPlus className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                    <h3 className="font-semibold text-gray-800 truncate">
                       {request.requestedBy}
                     </h3>
                     <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">
@@ -90,12 +90,12 @@ export function AccessRequests({
                     Requested: {new Date(request.requestedAt).toLocaleString()}
                   </p>
                 </div>
-                <div className="flex items-center space-x-2 ml-4">
+                <div className="flex items-center gap-2 sm:ml-0">
                   <button
                     onClick={() =>
                       handleRespond(request.key, request.requestedBy, true)
                     }
-                    className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                    className="flex-1 sm:flex-none flex items-center justify-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
                   >
                     <Check className="w-4 h-4" />
                     <span>Approve</span>
@@ -104,7 +104,7 @@ export function AccessRequests({
                     onClick={() =>
                       handleRespond(request.key, request.requestedBy, false)
                     }
-                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
+                    className="flex-1 sm:flex-none flex items-center justify-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
                   >
                     <X className="w-4 h-4" />
                     <span>Deny</span>

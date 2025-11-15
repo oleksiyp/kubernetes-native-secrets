@@ -226,24 +226,24 @@ export function SecretEditor({
             const secretMeta = metadata.secrets[key];
 
             return (
-              <div key={key} className="p-6 hover:bg-gray-50 transition">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Key className="w-5 h-5 text-gray-400" />
-                      <h3 className="font-semibold text-gray-800">{key}</h3>
+              <div key={key} className="p-4 md:p-6 hover:bg-gray-50 transition">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center flex-wrap gap-2 mb-2">
+                      <Key className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                      <h3 className="font-semibold text-gray-800 break-words">{key}</h3>
                       {owner && (
-                        <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
+                        <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full whitespace-nowrap">
                           Owner
                         </span>
                       )}
                       {!owner && canAccess && (
-                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full whitespace-nowrap">
                           Shared with you
                         </span>
                       )}
                       {!canAccess && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full whitespace-nowrap">
                           No access
                         </span>
                       )}
@@ -293,12 +293,13 @@ export function SecretEditor({
                     )}
                   </div>
 
-                  <div className="flex items-center space-x-2 ml-4">
+                  <div className="flex items-center gap-2 sm:ml-0">
                     {canAccess && (
                       <button
                         onClick={() => setShareKey(shareKey === key ? null : key)}
                         className="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition"
                         title="Share secret"
+                        aria-label="Share secret"
                       >
                         <Share2 className="w-5 h-5" />
                       </button>
@@ -310,6 +311,7 @@ export function SecretEditor({
                         }
                         className="p-2 hover:bg-purple-50 text-purple-600 rounded-lg transition"
                         title="Reassign owner"
+                        aria-label="Reassign owner"
                       >
                         <UserPlus className="w-5 h-5" />
                       </button>
@@ -319,6 +321,7 @@ export function SecretEditor({
                         onClick={() => handleDeleteSecret(key)}
                         className="p-2 hover:bg-red-50 text-red-600 rounded-lg transition"
                         title="Delete secret"
+                        aria-label="Delete secret"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -326,7 +329,7 @@ export function SecretEditor({
                     {!canAccess && (
                       <button
                         onClick={() => handleRequestAccess(key)}
-                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition"
+                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition whitespace-nowrap"
                       >
                         Request Access
                       </button>
@@ -340,7 +343,7 @@ export function SecretEditor({
                     <h4 className="font-medium text-gray-800 mb-2">
                       Share with user
                     </h4>
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <input
                         type="email"
                         value={shareEmail}
@@ -348,18 +351,20 @@ export function SecretEditor({
                         placeholder="user@example.com"
                         className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
-                      <button
-                        onClick={() => handleShareSecret(key)}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
-                      >
-                        Share
-                      </button>
-                      <button
-                        onClick={() => setShareKey(null)}
-                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleShareSecret(key)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition whitespace-nowrap"
+                        >
+                          Share
+                        </button>
+                        <button
+                          onClick={() => setShareKey(null)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition whitespace-nowrap"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -370,7 +375,7 @@ export function SecretEditor({
                     <h4 className="font-medium text-gray-800 mb-2">
                       Reassign ownership
                     </h4>
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <input
                         type="email"
                         value={reassignEmail}
@@ -378,18 +383,20 @@ export function SecretEditor({
                         placeholder="newowner@example.com"
                         className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       />
-                      <button
-                        onClick={() => handleReassignOwner(key)}
-                        className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition"
-                      >
-                        Reassign
-                      </button>
-                      <button
-                        onClick={() => setReassignKey(null)}
-                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleReassignOwner(key)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition whitespace-nowrap"
+                        >
+                          Reassign
+                        </button>
+                        <button
+                          onClick={() => setReassignKey(null)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition whitespace-nowrap"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}

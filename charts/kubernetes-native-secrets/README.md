@@ -24,6 +24,8 @@ helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets
 helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets --version 0.1.0
 ```
 
+**Note**: Each Helm chart version is pre-configured to use the matching Docker image version. The `image.tag` is automatically set during the release process.
+
 ### Alternative: Install from GitHub Releases
 
 ```bash
