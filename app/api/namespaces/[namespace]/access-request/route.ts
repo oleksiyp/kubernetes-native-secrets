@@ -8,6 +8,8 @@ import {
   getNamespaceMetadata,
 } from '@/lib/k8s-client';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   request: NextRequest,
   { params }: { params: { namespace: string } }

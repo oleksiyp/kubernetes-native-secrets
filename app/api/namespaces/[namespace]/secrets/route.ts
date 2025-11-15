@@ -9,6 +9,8 @@ import {
   hasAccess,
 } from '@/lib/k8s-client';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { namespace: string } }
