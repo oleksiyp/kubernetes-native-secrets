@@ -12,17 +12,26 @@ This Helm chart deploys the Kubernetes Native Secrets application to a Kubernete
 
 ## Installation
 
-### Add Helm Repository
+### Quick Start with OCI Registry
+
+The chart is available as an OCI artifact in GitHub Container Registry:
 
 ```bash
-helm repo add kubernetes-native-secrets https://oleksiyp.github.io/kubernetes-native-secrets
-helm repo update
+# Install latest version
+helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets
+
+# Install specific version
+helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets --version 0.1.0
 ```
 
-### Install the Chart
+### Alternative: Install from GitHub Releases
 
 ```bash
-helm install my-release kubernetes-native-secrets/kubernetes-native-secrets
+# Download from releases
+wget https://github.com/oleksiyp/kubernetes-native-secrets/releases/download/v0.1.0/kubernetes-native-secrets-0.1.0.tgz
+
+# Install the chart
+helm install my-release kubernetes-native-secrets-0.1.0.tgz
 ```
 
 ### Install with Custom Values
@@ -68,7 +77,7 @@ resources:
 Install with custom values:
 
 ```bash
-helm install my-release kubernetes-native-secrets/kubernetes-native-secrets -f values.yaml
+helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets -f values.yaml
 ```
 
 ## Configuration

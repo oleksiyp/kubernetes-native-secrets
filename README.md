@@ -54,14 +54,11 @@ Secrets are shared on a per-key basis with hash-based version tracking:
 
 ### Helm Installation
 
-1. Add the Helm repository (once published):
+#### Option 1: Install from OCI Registry (Recommended)
 
-```bash
-helm repo add kubernetes-native-secrets https://oleksiyp.github.io/kubernetes-native-secrets
-helm repo update
-```
+The Helm chart is published to GitHub Container Registry as an OCI artifact.
 
-2. Create a values file (`my-values.yaml`):
+1. Create a values file (`my-values.yaml`):
 
 ```yaml
 config:
@@ -93,10 +90,35 @@ ingress:
         - secrets.example.com
 ```
 
-3. Install the chart:
+2. Install the chart from OCI registry:
 
 ```bash
-helm install kubernetes-native-secrets kubernetes-native-secrets/kubernetes-native-secrets \
+# Install latest release
+helm install kubernetes-native-secrets \
+  oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets \
+  -f my-values.yaml \
+  --namespace kubernetes-native-secrets \
+  --create-namespace
+
+# Or install a specific version
+helm install kubernetes-native-secrets \
+  oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets \
+  --version 0.1.0 \
+  -f my-values.yaml \
+  --namespace kubernetes-native-secrets \
+  --create-namespace
+```
+
+#### Option 2: Install from GitHub Releases
+
+Download the chart from [GitHub Releases](https://github.com/oleksiyp/kubernetes-native-secrets/releases):
+
+```bash
+# Download the chart
+wget https://github.com/oleksiyp/kubernetes-native-secrets/releases/download/v0.1.0/kubernetes-native-secrets-0.1.0.tgz
+
+# Install the chart
+helm install kubernetes-native-secrets kubernetes-native-secrets-0.1.0.tgz \
   -f my-values.yaml \
   --namespace kubernetes-native-secrets \
   --create-namespace

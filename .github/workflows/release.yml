@@ -69,9 +69,26 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.14.0'
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
       - name: Package Helm chart
         run: |
+          # Update chart version to match the git tag
+          sed -i "s/^version:.*/version: ${{ steps.version.outputs.VERSION }}/" charts/kubernetes-native-secrets/Chart.yaml
+          sed -i "s/^appVersion:.*/appVersion: \"${{ steps.version.outputs.VERSION }}\"/" charts/kubernetes-native-secrets/Chart.yaml
           helm package charts/kubernetes-native-secrets
+
+      - name: Push Helm chart to OCI registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
+          helm push kubernetes-native-secrets-${{ steps.version.outputs.VERSION }}.tgz oci://${{ env.REGISTRY }}/${{ github.repository_owner }}/charts
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
