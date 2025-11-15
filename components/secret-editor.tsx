@@ -272,7 +272,7 @@ export function SecretEditor({
                       <div className="flex items-center space-x-2 mb-2 text-gray-500">
                         <Lock className="w-4 h-4" />
                         <span className="text-sm italic">
-                          You don't have access to this secret
+                          You don&apos;t have access to this secret
                         </span>
                       </div>
                     )}

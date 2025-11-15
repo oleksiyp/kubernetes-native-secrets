@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Header } from '@/components/header';
 import { SecretEditor } from '@/components/secret-editor';
 import { AccessRequests } from '@/components/access-requests';
@@ -24,13 +24,28 @@ export default function NamespacePage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'secrets' | 'requests' | 'audit'>('secrets');
 
+  const fetchSecrets = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/namespaces/${namespace}/secrets`);
+      if (response.ok) {
+        const data = await response.json();
+        setSecrets(data.secrets);
+        setMetadata(data.metadata);
+      }
+    } catch (error) {
+      console.error('Error fetching secrets:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [namespace]);
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/');
     } else if (status === 'authenticated') {
       fetchSecrets();
     }
-  }, [status, namespace]);
+  }, [status, namespace, router, fetchSecrets]);
 
   useEffect(() => {
     if (!socket) return;
@@ -48,21 +63,6 @@ export default function NamespacePage() {
       socket.off('metadata-update');
     };
   }, [socket, namespace]);
-
-  const fetchSecrets = async () => {
-    try {
-      const response = await fetch(`/api/namespaces/${namespace}/secrets`);
-      if (response.ok) {
-        const data = await response.json();
-        setSecrets(data.secrets);
-        setMetadata(data.metadata);
-      }
-    } catch (error) {
-      console.error('Error fetching secrets:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (status === 'loading' || loading) {
     return (
@@ -82,8 +82,8 @@ export default function NamespacePage() {
           meta.accessRequests
             .filter((req) => req.status === 'pending')
             .map((req) => ({
-              key,
               ...req,
+              key,
               canApprove:
                 meta.owner === userEmail ||
                 meta.sharedWith.some(
