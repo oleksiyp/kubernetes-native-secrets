@@ -67,3 +67,24 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.14.0'
+
+      - name: Package and push Helm chart
+        run: |
+          # Get short SHA for versioning
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          CHART_VERSION="0.0.0-${SHORT_SHA}"
+
+          # Update chart version
+          sed -i "s/^version:.*/version: ${CHART_VERSION}/" charts/kubernetes-native-secrets/Chart.yaml
+
+          # Package chart
+          helm package charts/kubernetes-native-secrets
+
+          # Push to OCI registry
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ${{ env.REGISTRY }} --username ${{ github.actor }} --password-stdin
+          helm push kubernetes-native-secrets-${CHART_VERSION}.tgz oci://${{ env.REGISTRY }}/${{ github.repository_owner }}/charts

@@ -45,8 +45,8 @@ export function AccessRequests({
   const requests = Object.entries(metadata.secrets)
     .flatMap(([key, meta]) =>
       meta.accessRequests.map((req) => ({
-        key,
         ...req,
+        key,
         canApprove:
           meta.owner === userEmail ||
           meta.sharedWith.some(
