@@ -91,6 +91,7 @@ helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets 
 | `image.tag` | Image tag | Chart appVersion |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `config.secretsNamespace` | Namespace for storing secrets | `native-secrets` |
+| `config.createSecretsNamespace` | Create the secrets namespace | `true` |
 | `config.dex.issuer` | DEX issuer URL | `https://dex.example.com` |
 | `config.dex.clientId` | DEX client ID | `kubernetes-native-secrets` |
 | `config.nextAuth.url` | Application URL | `https://secrets.example.com` |
@@ -99,6 +100,16 @@ helm install my-release oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets 
 | `rbac.create` | Create RBAC resources | `true` |
 
 See [values.yaml](values.yaml) for all available options.
+
+### Secrets Namespace
+
+By default, the chart creates a namespace for storing secrets and metadata (default: `native-secrets`). If you want to use an existing namespace or manage namespace creation separately, set `config.createSecretsNamespace: false`:
+
+```yaml
+config:
+  secretsNamespace: my-existing-namespace
+  createSecretsNamespace: false
+```
 
 ## RBAC
 

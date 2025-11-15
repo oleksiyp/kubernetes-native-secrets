@@ -84,6 +84,9 @@ affinity: {}
 config:
   # Namespace where secrets and configmaps will be stored
   secretsNamespace: native-secrets
+  # Create the secrets namespace if it doesn't exist
+  # Set to false if the namespace already exists or is managed externally
+  createSecretsNamespace: true
 
   # DEX configuration
   dex:
