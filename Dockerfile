@@ -28,14 +28,10 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 # Copy built application
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/server.ts ./server.ts
-COPY --from=builder /app/node_modules ./node_modules
-
-# Change ownership
-RUN chown -R nextjs:nodejs /app
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/server.ts ./server.ts
 
 USER nextjs
 
