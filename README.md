@@ -93,7 +93,7 @@ ingress:
 2. Install the chart from OCI registry:
 
 ```bash
-# Install latest release
+# Install latest release (automatically uses matching Docker image version)
 helm install kubernetes-native-secrets \
   oci://ghcr.io/oleksiyp/charts/kubernetes-native-secrets \
   -f my-values.yaml \
@@ -108,6 +108,8 @@ helm install kubernetes-native-secrets \
   --namespace kubernetes-native-secrets \
   --create-namespace
 ```
+
+**Note**: Helm charts are pre-configured to use the Docker image built in the same release. The chart's `appVersion` and default `image.tag` are automatically set to match the release version.
 
 #### Option 2: Install from GitHub Releases
 

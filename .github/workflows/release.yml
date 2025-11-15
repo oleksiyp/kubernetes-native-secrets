@@ -80,9 +80,14 @@ jobs:
 
       - name: Package Helm chart
         run: |
-          # Update chart version to match the git tag
+          # Update chart version and appVersion to match the git tag
           sed -i "s/^version:.*/version: ${{ steps.version.outputs.VERSION }}/" charts/kubernetes-native-secrets/Chart.yaml
           sed -i "s/^appVersion:.*/appVersion: \"${{ steps.version.outputs.VERSION }}\"/" charts/kubernetes-native-secrets/Chart.yaml
+
+          # Update default image tag in values.yaml to match the Docker image
+          sed -i "s/tag: \"\"/tag: \"${{ steps.version.outputs.VERSION }}\"/" charts/kubernetes-native-secrets/values.yaml
+
+          # Package chart
           helm package charts/kubernetes-native-secrets
 
       - name: Push Helm chart to OCI registry

@@ -78,9 +78,14 @@ jobs:
           # Get short SHA for versioning
           SHORT_SHA=$(git rev-parse --short HEAD)
           CHART_VERSION="0.0.0-${SHORT_SHA}"
+          IMAGE_TAG="main-${GITHUB_SHA::7}"
 
-          # Update chart version
+          # Update chart version and appVersion
           sed -i "s/^version:.*/version: ${CHART_VERSION}/" charts/kubernetes-native-secrets/Chart.yaml
+          sed -i "s/^appVersion:.*/appVersion: \"${IMAGE_TAG}\"/" charts/kubernetes-native-secrets/Chart.yaml
+
+          # Update default image tag in values.yaml
+          sed -i "s/tag: \"\"/tag: \"${IMAGE_TAG}\"/" charts/kubernetes-native-secrets/values.yaml
 
           # Package chart
           helm package charts/kubernetes-native-secrets
