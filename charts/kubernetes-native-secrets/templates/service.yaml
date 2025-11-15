@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kubernetes-native-secrets.fullname" . }}
+  labels:
+    {{- include "kubernetes-native-secrets.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kubernetes-native-secrets.selectorLabels" . | nindent 4 }}

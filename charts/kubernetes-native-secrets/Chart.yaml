@@ -1,0 +1,17 @@
+apiVersion: v2
+name: kubernetes-native-secrets
+description: A Helm chart for Kubernetes Native Secrets editor with DEX authentication
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - secrets
+  - dex
+  - authentication
+  - secret-management
+home: https://github.com/oleksiyp/kubernetes-native-secrets
+sources:
+  - https://github.com/oleksiyp/kubernetes-native-secrets
+maintainers:
+  - name: oleksiyp
+    email: oleksiyp@users.noreply.github.com

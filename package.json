@@ -1,0 +1,57 @@
+{
+  "name": "kubernetes-native-secrets",
+  "version": "0.1.0",
+  "description": "Next.js secret editor for Kubernetes with DEX authentication and real-time sharing",
+  "private": true,
+  "scripts": {
+    "dev": "tsx server.ts",
+    "build": "next build",
+    "start": "node server.ts",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.20.0",
+    "next": "14.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next-auth": "^4.24.7",
+    "swr": "^2.2.5",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "bcryptjs": "^2.4.3",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.378.0",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.3",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "tsx": "^4.7.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oleksiyp/kubernetes-native-secrets.git"
+  },
+  "keywords": [
+    "kubernetes",
+    "secrets",
+    "nextjs",
+    "dex",
+    "secret-management",
+    "external-secrets-operator"
+  ],
+  "author": "oleksiyp",
+  "license": "MIT"
+}
